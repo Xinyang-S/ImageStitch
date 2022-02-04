@@ -164,8 +164,10 @@ class Stitcher(Utility.Method):
         """
         for i in range(startNum, fileNum+1):
             startTime = time.time()
-            fileAddress = projectAddress + "\\" + str(i) + "\\"
-            fileList = glob.glob(fileAddress + "*." + fileExtension)
+            #fileAddress = projectAddress + "/" + str(i) + "/"
+            fileList = glob.glob(projectAddress + "*." + fileExtension)
+            fileList.sort()
+            print(fileList)
             if not os.path.exists(outputAddress):
                 os.makedirs(outputAddress)
             Stitcher.outputAddress = outputAddress
@@ -179,7 +181,7 @@ class Stitcher(Utility.Method):
                     cv2.imwrite(outputAddress + "\\stitching_result_" + str(i) + "_" + str(j+1) + "." + outputfileExtension, result[j])
                     # cv2.imwrite(outputAddress + "\\" + outputName + "_" + str(j + 1) + "." + outputfileExtension,result[j])
             endTime = time.time()
-            print("Time Consuming for " + fileAddress + " is " + str(endTime - startTime))
+            print("Time Consuming for " + projectAddress + " is " + str(endTime - startTime))
 
     def calculateOffsetForPhaseCorrleate(self, dirAddress):
         """
@@ -526,6 +528,6 @@ class Stitcher(Utility.Method):
 
 if __name__=="__main__":
     stitcher = Stitcher()
-    imageA = cv2.imread(".\\images\\dendriticCrystal\\1\\1-044.jpg", 0)
-    imageB = cv2.imread(".\\images\\dendriticCrystal\\1\\1-045.jpg", 0)
+    imageA = cv2.imread("/Users/sunxinyang/Documents/GitHub/ImageStitch/wuyan-sem/1_189.tif", 0)
+    imageB = cv2.imread("/Users/sunxinyang/Documents/GitHub/ImageStitch/wuyan-sem/1_190.tif", 0)
     offset = stitcher.calculateOffsetForFeatureSearchIncre([imageA, imageB])
